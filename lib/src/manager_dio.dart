@@ -57,7 +57,11 @@ class DioCacheManager {
     if ((response.request.extra[DIO_CACHE_KEY_TRY_CACHE] ?? false) == true &&
         response.statusCode >= 200 &&
         response.statusCode < 300) {
-      await _pushToCache(response);
+      if (response.data.containsKey('rates')) {
+        if (response.data['rates'] != null) await _pushToCache(response);
+      } else {
+        await _pushToCache(response);
+      }
     }
     return response;
   }
