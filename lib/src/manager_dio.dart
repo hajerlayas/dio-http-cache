@@ -57,6 +57,9 @@ class DioCacheManager {
     if ((response.request.extra[DIO_CACHE_KEY_TRY_CACHE] ?? false) == true &&
         response.statusCode >= 200 &&
         response.statusCode < 300) {
+            if(response.request.baseUrl == 'https://tasaminews.ly/api/' ){
+                await _pushToCache(response);
+            } else
       if (jsonDecode(response.data).containsKey('rates')) {
         if (jsonDecode(response.data)['rates'] != null) {
           await _pushToCache(response);
